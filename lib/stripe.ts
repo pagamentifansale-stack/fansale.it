@@ -1,5 +1,3 @@
-import Stripe from 'stripe'
-
-export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: '2026-04-22.dahlia',
-})
+// Stripe integration removed — payments are handled manually.
+// This file is kept as a stub to avoid import errors from any legacy references.
+export const stripe = null

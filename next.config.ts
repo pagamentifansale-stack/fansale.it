@@ -1,6 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // Hide the Next.js dev indicator ("N" button)
+  devIndicators: false,
   // Allow phone/tablet on the same LAN to access the dev server
   allowedDevOrigins: ['192.168.43.86'],
   images: {
