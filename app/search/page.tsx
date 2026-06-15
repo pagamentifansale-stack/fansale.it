@@ -15,6 +15,45 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { useDebounce } from "@/hooks/useDebounce";
 import { getArtistImage } from "@/lib/images";
+import { MOCK_ARTISTS, MOCK_EVENT_TICKETS } from "@/lib/mockTickets";
+
+// Build artist name → { artistSlug, artistId } lookup
+const ARTIST_NAME_TO_IDS: Record<
+  string,
+  { artistSlug: string; artistId: number }
+> = {};
+for (const [slug, artist] of Object.entries(MOCK_ARTISTS)) {
+  ARTIST_NAME_TO_IDS[artist.name.toLowerCase()] = {
+    artistSlug: slug,
+    artistId: artist.id,
+  };
+}
+
+// Build a helper: given artist name + ISO date string → best href
+function resolveEventHref(artistName: string, eventDateISO: string): string {
+  const artistKey = artistName.toLowerCase();
+  const artistIds = ARTIST_NAME_TO_IDS[artistKey];
+  if (!artistIds) return `/tickets/all`;
+
+  // Try to match by artist + date (convert ISO → dd/mm/yyyy for comparison)
+  const d = new Date(eventDateISO);
+  const itDate = d.toLocaleDateString("it-IT").replace(/\//g, "/"); // dd/mm/yyyy
+  const mockEvent = Object.values(MOCK_EVENT_TICKETS).find(
+    (e) => e.artist.toLowerCase() === artistKey && e.date === itDate,
+  );
+
+  if (mockEvent) {
+    return `/tickets/all/${artistIds.artistSlug}/${artistIds.artistId}/${mockEvent.numericId}`;
+  }
+  return `/tickets/all/${artistIds.artistSlug}/${artistIds.artistId}`;
+}
+
+function resolveArtistHref(artistName: string): string {
+  const artistIds = ARTIST_NAME_TO_IDS[artistName.toLowerCase()];
+  if (artistIds)
+    return `/tickets/all/${artistIds.artistSlug}/${artistIds.artistId}`;
+  return `/tickets/all`;
+}
 
 type EventResult = {
   id: string;
@@ -219,7 +258,7 @@ function SearchContent() {
                 </div>
                 <div className="flex-1 min-w-0">
                   <Link
-                    href={`/cerca?q=${encodeURIComponent(event.artist)}`}
+                    href={resolveEventHref(event.artist, event.event_date)}
                     className="font-bold text-[#1a2744] hover:underline text-sm leading-tight block truncate"
                   >
                     {event.title}
@@ -246,7 +285,7 @@ function SearchContent() {
                     </p>
                   </div>
                   <Link
-                    href={`/cerca?q=${encodeURIComponent(event.artist)}`}
+                    href={resolveEventHref(event.artist, event.event_date)}
                     className="bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-bold text-xs px-3 py-1.5 rounded-lg transition-colors whitespace-nowrap"
                   >
                     Vedi
@@ -306,7 +345,7 @@ function SearchContent() {
                       </div>
                     )}
                     <Link
-                      href={`/cerca?q=${encodeURIComponent(artist)}`}
+                      href={resolveArtistHref(artist)}
                       className="bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-bold text-sm px-4 py-2 rounded-lg transition-colors"
                     >
                       Vedi

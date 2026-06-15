@@ -1,13 +1,19 @@
 ﻿import Link from "next/link";
 
 const recommendedArtists = [
-  "Elodie Biglietti",
-  "Annalisa Biglietti",
-  "Elisa Biglietti",
-  "Cesare Cremonini Biglietti",
-  "Claudio Baglioni Biglietti",
-  "Negramaro Biglietti",
-  "Max Pezzali Biglietti",
+  { label: "Elodie Biglietti", href: "/tickets/all/elodie/334455" },
+  { label: "Annalisa Biglietti", href: "/tickets/all/annalisa/345678" },
+  { label: "Elisa Biglietti", href: "/tickets/all/elisa/445566" },
+  {
+    label: "Cesare Cremonini Biglietti",
+    href: "/tickets/all/cesare-cremonini/556677",
+  },
+  {
+    label: "Claudio Baglioni Biglietti",
+    href: "/tickets/all/claudio-baglioni/667788",
+  },
+  { label: "Negramaro Biglietti", href: "/tickets/all/negramaro/778899" },
+  { label: "Max Pezzali Biglietti", href: "/tickets/all/max-pezzali/889900" },
 ];
 
 export default function RecentListings() {
@@ -19,12 +25,12 @@ export default function RecentListings() {
             Consigliati da fanSALE
           </span>
           {recommendedArtists.map((artist, i) => (
-            <span key={artist} className="flex items-center">
+            <span key={artist.label} className="flex items-center">
               <Link
-                href={`/cerca?q=${encodeURIComponent(artist)}`}
+                href={artist.href}
                 className="text-sm text-[#1a2744] hover:underline"
               >
-                {artist}
+                {artist.label}
               </Link>
               {i < recommendedArtists.length - 1 && (
                 <span className="text-gray-400 mx-1">|</span>

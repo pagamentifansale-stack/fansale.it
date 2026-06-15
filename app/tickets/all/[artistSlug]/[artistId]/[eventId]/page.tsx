@@ -481,11 +481,11 @@ function EventTicketsContent({
             fanSALE
           </Link>
           <ChevronRight size={14} className="text-gray-400" />
-          <Link href="/cerca?category=Concerti" className="hover:underline">
+          <Link href="/tickets/all" className="hover:underline">
             Concerti
           </Link>
           <ChevronRight size={14} className="text-gray-400" />
-          <Link href="/cerca?category=Pop+Rock" className="hover:underline">
+          <Link href="/tickets/all" className="hover:underline">
             Pop &amp; Rock
           </Link>
           <ChevronRight size={14} className="text-gray-400" />
@@ -655,20 +655,32 @@ function EventTicketsContent({
           </p>
           <div className="flex flex-wrap gap-1 text-sm">
             {[
-              "Elodie Biglietti",
-              "Annalisa Biglietti",
-              "Elisa Biglietti",
-              "Cesare Cremonini Biglietti",
-              "Claudio Baglioni Biglietti",
-              "Negramaro Biglietti",
-              "Max Pezzali Biglietti",
+              { label: "Elodie Biglietti", href: "/tickets/all/elodie/334455" },
+              {
+                label: "Annalisa Biglietti",
+                href: "/tickets/all/annalisa/345678",
+              },
+              { label: "Elisa Biglietti", href: "/tickets/all/elisa/445566" },
+              {
+                label: "Cesare Cremonini Biglietti",
+                href: "/tickets/all/cesare-cremonini/556677",
+              },
+              {
+                label: "Claudio Baglioni Biglietti",
+                href: "/tickets/all/claudio-baglioni/667788",
+              },
+              {
+                label: "Negramaro Biglietti",
+                href: "/tickets/all/negramaro/778899",
+              },
+              {
+                label: "Max Pezzali Biglietti",
+                href: "/tickets/all/max-pezzali/889900",
+              },
             ].map((a, i, arr) => (
-              <span key={a} className="flex items-center">
-                <Link
-                  href={`/cerca?q=${encodeURIComponent(a.replace(" Biglietti", ""))}`}
-                  className="text-[#1a2744] hover:underline"
-                >
-                  {a}
+              <span key={a.label} className="flex items-center">
+                <Link href={a.href} className="text-[#1a2744] hover:underline">
+                  {a.label}
                 </Link>
                 {i < arr.length - 1 && (
                   <span className="text-gray-400 mx-1">|</span>

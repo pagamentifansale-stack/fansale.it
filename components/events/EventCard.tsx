@@ -32,7 +32,7 @@ export default function EventCard({ event }: { event: Event }) {
       ? `/tickets/all/${artistIds.artistSlug}/${artistIds.artistId}/${mockEvent.numericId}`
       : artistIds
         ? `/tickets/all/${artistIds.artistSlug}/${artistIds.artistId}`
-        : `/cerca?q=${encodeURIComponent(event.artist)}`;
+        : `/tickets/all`;
 
   return (
     <Link

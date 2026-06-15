@@ -104,7 +104,7 @@ export default function Navbar() {
           {categories.map((cat) => (
             <Link
               key={cat}
-              href={`/cerca?category=${encodeURIComponent(cat)}`}
+              href="/tickets/all"
               onClick={() => setMenuOpen(false)}
               className="flex items-center justify-between px-5 py-3.5 hover:bg-gray-50 border-b border-gray-100 last:border-0 text-sm font-medium transition-colors"
             >

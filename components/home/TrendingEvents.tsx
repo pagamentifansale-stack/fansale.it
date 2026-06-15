@@ -13,31 +13,31 @@ const events = [
     id: "2",
     artist: "Tropico",
     tour: "Tour 2026",
-    href: "/cerca?q=Tropico",
+    href: "/tickets/all/tropico/567890",
   },
   {
     id: "3",
     artist: "Luca Carboni",
     tour: "Bio",
-    href: "/cerca?q=Luca+Carboni",
+    href: "/tickets/all/luca-carboni/678901",
   },
   {
     id: "4",
     artist: "Fabrizio Moro",
     tour: "Non ho paura di niente Live 2026",
-    href: "/cerca?q=Fabrizio+Moro",
+    href: "/tickets/all/fabrizio-moro/789012",
   },
   {
     id: "5",
     artist: "Deep Purple",
     tour: "World Tour 2026",
-    href: "/cerca?q=Deep+Purple",
+    href: "/tickets/all/deep-purple/890123",
   },
   {
     id: "6",
     artist: "Zucchero",
     tour: "Overdose D'Amore Gold",
-    href: "/cerca?q=Zucchero",
+    href: "/tickets/all/zucchero/901234",
   },
   {
     id: "7",
@@ -49,13 +49,13 @@ const events = [
     id: "8",
     artist: "Luchè",
     tour: "Arena Tour 2025-2026",
-    href: "/cerca?q=Luch%C3%A8",
+    href: "/tickets/all/luche/112233",
   },
   {
     id: "9",
     artist: "Caparezza",
     tour: "Live Tour 2026",
-    href: "/cerca?q=Caparezza",
+    href: "/tickets/all/caparezza/223344",
   },
 ];
 
