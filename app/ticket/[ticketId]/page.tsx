@@ -55,7 +55,21 @@ function getSelectedSeats(
 function TicketPageInner({ ticketId }: { ticketId: string }) {
   const searchParams = useSearchParams();
   const eventSlug = searchParams.get("event") ?? "";
-  const data = getMockTicketData(eventSlug, ticketId);
+
+  // Support both old slug-based lookup and new numeric offerId lookup
+  const offerIdNum = parseInt(ticketId, 10);
+  const isNumeric = !isNaN(offerIdNum);
+
+  // Try numeric offerId first, then fall back to slug-based lookup
+  let data = isNumeric
+    ? (() => {
+        const { getTicketByOfferId } = require("@/lib/mockTickets");
+        return getTicketByOfferId(offerIdNum);
+      })()
+    : null;
+  if (!data && eventSlug) {
+    data = getMockTicketData(eventSlug, ticketId);
+  }
 
   const [quantity, setQuantity] = useState(1);
   const [showFullDesc, setShowFullDesc] = useState(false);
@@ -117,7 +131,7 @@ function TicketPageInner({ ticketId }: { ticketId: string }) {
   const canCheckout = !isLocked && missingNames === 0;
 
   const checkoutHref = canCheckout
-    ? `/acquisto/${ticketId}?event=${eventSlug}&qty=${safeQty}&attendees=${encodeURIComponent(
+    ? `/checkout/${isNumeric ? offerIdNum : ticketId}?offerId=${isNumeric ? offerIdNum : ticketId}&qty=${safeQty}&attendees=${encodeURIComponent(
         attendeeNames.slice(0, safeQty).join("|"),
       )}`
     : "#";
@@ -128,7 +142,13 @@ function TicketPageInner({ ticketId }: { ticketId: string }) {
       <div className="bg-white border-b border-gray-200 px-4 py-2.5">
         <div className="max-w-4xl mx-auto">
           <Link
-            href={eventSlug ? `/evento/${eventSlug}/biglietti` : "/cerca"}
+            href={
+              data
+                ? `/tickets/all/${data.event.artistSlug}/${data.event.artistId}/${data.event.numericId}`
+                : eventSlug
+                  ? `/evento/${eventSlug}/biglietti`
+                  : "/cerca"
+            }
             className="flex items-center gap-1 text-[#1a2744] text-sm font-medium hover:underline"
           >
             <ArrowLeft size={15} />

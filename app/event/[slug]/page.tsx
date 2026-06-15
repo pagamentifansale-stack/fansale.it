@@ -1,6 +1,6 @@
 "use client";
 import { Suspense, useState, useEffect } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -16,6 +16,28 @@ import {
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { getArtistImage } from "@/lib/images";
+import { MOCK_ARTISTS, MOCK_EVENT_TICKETS } from "@/lib/mockTickets";
+
+// Slug → new numeric URL mapping for redirects
+function getNewUrlForSlug(slug: string): string | null {
+  // Direct event slug match (e.g. "geolier-napoli-2026-06-26")
+  const event = MOCK_EVENT_TICKETS[slug];
+  if (event) {
+    return `/tickets/all/${event.artistSlug}/${event.artistId}/${event.numericId}`;
+  }
+  // Artist slug match (e.g. "geolier")
+  const artist = MOCK_ARTISTS[slug];
+  if (artist) {
+    return `/tickets/all/${artist.slug}/${artist.id}`;
+  }
+  // Try prefix match for artist (e.g. "geolier-napoli-..." → artist "geolier")
+  for (const [artistSlug, artistData] of Object.entries(MOCK_ARTISTS)) {
+    if (slug.startsWith(artistSlug)) {
+      return `/tickets/all/${artistData.slug}/${artistData.id}`;
+    }
+  }
+  return null;
+}
 
 // Artist data — replace with Supabase fetch
 const ARTIST_DATA: Record<
@@ -360,9 +382,18 @@ function ArtistBanner({
 
 function EventPageContent() {
   const params = useParams();
+  const router = useRouter();
   const slug = (params.slug as string) || "";
   const artist = getArtistFromSlug(slug);
   const [bioExpanded, setBioExpanded] = useState(false);
+
+  // Redirect to new numeric URL if we can resolve it
+  useEffect(() => {
+    const newUrl = getNewUrlForSlug(slug);
+    if (newUrl) {
+      router.replace(newUrl);
+    }
+  }, [slug, router]);
 
   if (!artist) {
     return (

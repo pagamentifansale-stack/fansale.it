@@ -219,7 +219,7 @@ function SearchContent() {
                 </div>
                 <div className="flex-1 min-w-0">
                   <Link
-                    href={`/evento/${event.slug}`}
+                    href={`/cerca?q=${encodeURIComponent(event.artist)}`}
                     className="font-bold text-[#1a2744] hover:underline text-sm leading-tight block truncate"
                   >
                     {event.title}
@@ -246,7 +246,7 @@ function SearchContent() {
                     </p>
                   </div>
                   <Link
-                    href={`/evento/${event.slug}`}
+                    href={`/cerca?q=${encodeURIComponent(event.artist)}`}
                     className="bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-bold text-xs px-3 py-1.5 rounded-lg transition-colors whitespace-nowrap"
                   >
                     Vedi

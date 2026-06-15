@@ -678,7 +678,28 @@ function ConfirmationStep({
 function CheckoutInner({ ticketId }: { ticketId: string }) {
   const searchParams = useSearchParams();
   const eventSlug = searchParams.get("event") ?? "";
-  const mockData = getMockTicketData(eventSlug, ticketId);
+  const offerIdParam = searchParams.get("offerId");
+
+  // Support numeric offerId lookup (new URL pattern) or legacy slug+ticketId lookup
+  const offerIdNum = offerIdParam
+    ? parseInt(offerIdParam, 10)
+    : parseInt(ticketId, 10);
+  const isNumeric = !isNaN(offerIdNum);
+
+  let mockData = isNumeric
+    ? (() => {
+        const { getTicketByOfferId } = require("@/lib/mockTickets");
+        return getTicketByOfferId(offerIdNum) as {
+          event: MockEvent;
+          ticket: MockTicket;
+        } | null;
+      })()
+    : null;
+
+  // Fall back to legacy slug-based lookup
+  if (!mockData && eventSlug) {
+    mockData = getMockTicketData(eventSlug, ticketId);
+  }
 
   // Fallback so the page still renders even without valid mock data
   const event =

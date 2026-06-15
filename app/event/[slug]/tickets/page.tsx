@@ -1,6 +1,6 @@
 "use client";
-import { Suspense, useState } from "react";
-import { useParams } from "next/navigation";
+import { Suspense, useState, useEffect } from "react";
+import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -924,9 +924,26 @@ function getEventData(slug: string) {
 
 function TicketsContent() {
   const params = useParams();
+  const router = useRouter();
   const slug = (params.slug as string) || "";
   const event = getEventData(slug);
   const [sortBy, setSortBy] = useState<"price" | "quantity">("price");
+
+  // Redirect to new numeric URL
+  useEffect(() => {
+    // Import inline to avoid circular deps — use the EVENT_TICKETS data we already have
+    if (event) {
+      // Find the matching MOCK_EVENT_TICKETS entry to get numericId
+      import("@/lib/mockTickets").then(({ MOCK_EVENT_TICKETS }) => {
+        const mockEvent = MOCK_EVENT_TICKETS[slug];
+        if (mockEvent) {
+          router.replace(
+            `/tickets/all/${mockEvent.artistSlug}/${mockEvent.artistId}/${mockEvent.numericId}`,
+          );
+        }
+      });
+    }
+  }, [slug, event, router]);
 
   if (!event) {
     return (

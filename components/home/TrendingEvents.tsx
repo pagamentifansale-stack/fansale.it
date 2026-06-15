@@ -7,55 +7,55 @@ const events = [
     id: "1",
     artist: "Bad Bunny",
     tour: "DeBÍ TiRAR MáS FOToS Tour",
-    slug: "bad-bunny-milano-2025-07-10",
+    href: "/tickets/all/bad-bunny/456789/20400100",
   },
   {
     id: "2",
     artist: "Tropico",
     tour: "Tour 2026",
-    slug: "tropico-milano-2026-03-07",
+    href: "/cerca?q=Tropico",
   },
   {
     id: "3",
     artist: "Luca Carboni",
     tour: "Bio",
-    slug: "luca-carboni-bologna-2026-04-04",
+    href: "/cerca?q=Luca+Carboni",
   },
   {
     id: "4",
     artist: "Fabrizio Moro",
     tour: "Non ho paura di niente Live 2026",
-    slug: "fabrizio-moro-milano-2026-05-09",
+    href: "/cerca?q=Fabrizio+Moro",
   },
   {
     id: "5",
     artist: "Deep Purple",
     tour: "World Tour 2026",
-    slug: "deep-purple-milano-2026-03-03",
+    href: "/cerca?q=Deep+Purple",
   },
   {
     id: "6",
     artist: "Zucchero",
     tour: "Overdose D'Amore Gold",
-    slug: "zucchero-milano-2026-03-14",
+    href: "/cerca?q=Zucchero",
   },
   {
     id: "7",
     artist: "Geolier",
-    tour: "2026 Stage",
-    slug: "geolier-napoli-2026-06-07",
+    tour: "Stadi 2026",
+    href: "/tickets/all/geolier/577164",
   },
   {
     id: "8",
     artist: "Luchè",
     tour: "Arena Tour 2025-2026",
-    slug: "luche-milano-2025-12-06",
+    href: "/cerca?q=Luch%C3%A8",
   },
   {
     id: "9",
     artist: "Caparezza",
     tour: "Live Tour 2026",
-    slug: "caparezza-milano-2026-04-18",
+    href: "/cerca?q=Caparezza",
   },
 ];
 
@@ -67,7 +67,7 @@ export default function TrendingEvents() {
           {events.map((event) => (
             <Link
               key={event.id}
-              href={`/evento/${event.slug}`}
+              href={event.href}
               className="group relative aspect-[3/4] rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
             >
               <Image
