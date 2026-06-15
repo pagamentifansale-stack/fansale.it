@@ -219,7 +219,7 @@ function SearchContent() {
                 </div>
                 <div className="flex-1 min-w-0">
                   <Link
-                    href={`/event/${event.slug}`}
+                    href={`/evento/${event.slug}`}
                     className="font-bold text-[#1a2744] hover:underline text-base leading-tight block truncate"
                   >
                     {event.title}
@@ -251,7 +251,7 @@ function SearchContent() {
                     </p>
                   </div>
                   <Link
-                    href={`/event/${event.slug}`}
+                    href={`/evento/${event.slug}`}
                     className="bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-bold text-sm px-4 py-2 rounded-lg transition-colors whitespace-nowrap"
                   >
                     Vedi
@@ -311,7 +311,7 @@ function SearchContent() {
                       </div>
                     )}
                     <Link
-                      href={`/search?q=${encodeURIComponent(artist)}`}
+                      href={`/cerca?q=${encodeURIComponent(artist)}`}
                       className="bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-bold text-sm px-4 py-2 rounded-lg transition-colors"
                     >
                       Vedi

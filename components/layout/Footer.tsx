@@ -4,7 +4,7 @@ const footerLinks = {
   "Help & Contatti": [
     { label: "Servizio Clienti", href: "/help" },
     { label: "Servizi", href: "/help#servizi" },
-    { label: "Top artisti", href: "/search" },
+    { label: "Top artisti", href: "/cerca" },
   ],
   "Domande frequenti": [
     { label: "FAQ dell'acquirente", href: "/help#faq-buyer" },

@@ -934,7 +934,7 @@ function TicketsContent() {
         <div className="bg-white border border-gray-200 rounded-xl p-12 text-center">
           <p className="text-gray-500 font-medium">Evento non trovato</p>
           <Link
-            href="/search"
+            href="/cerca"
             className="text-[#1a2744] hover:underline text-sm mt-2 block"
           >
             ← Torna alla ricerca
@@ -957,19 +957,25 @@ function TicketsContent() {
             fanSALE
           </Link>
           <ChevronRight size={14} className="text-gray-400" />
-          <Link href="/search?category=Concerti" className="hover:underline">
+          <Link href="/cerca?category=Concerti" className="hover:underline">
             Concerti
           </Link>
           <ChevronRight size={14} className="text-gray-400" />
-          <Link href="/search?category=Pop+Rock" className="hover:underline">
+          <Link href="/cerca?category=Pop+Rock" className="hover:underline">
             Pop & Rock
           </Link>
           <ChevronRight size={14} className="text-gray-400" />
-          <Link href={`/event/${event.artistSlug}`} className="hover:underline">
+          <Link
+            href={`/evento/${event.artistSlug}`}
+            className="hover:underline"
+          >
             {event.artist}
           </Link>
           <ChevronRight size={14} className="text-gray-400" />
-          <Link href={`/event/${event.artistSlug}`} className="hover:underline">
+          <Link
+            href={`/evento/${event.artistSlug}`}
+            className="hover:underline"
+          >
             {event.eventTitle}
           </Link>
           <ChevronRight size={14} className="text-gray-400" />
@@ -1013,7 +1019,7 @@ function TicketsContent() {
       <div className="max-w-5xl mx-auto px-4 py-5 space-y-4">
         {/* Back link */}
         <Link
-          href={`/event/${event.artistSlug}`}
+          href={`/evento/${event.artistSlug}`}
           className="flex items-center gap-1 text-[#1a2744] text-sm hover:underline"
         >
           <ChevronLeft size={16} /> Torna alle date
@@ -1057,7 +1063,7 @@ function TicketsContent() {
               {sortedTickets.map((ticket) => (
                 <Link
                   key={ticket.id}
-                  href={`/ticket/${ticket.id}?event=${slug}`}
+                  href={`/biglietto/${ticket.id}?event=${slug}`}
                   className="flex items-center gap-4 px-5 py-4 hover:bg-gray-50 transition-colors group"
                 >
                   {/* Quantity + section */}
@@ -1181,7 +1187,7 @@ function TicketsContent() {
             ].map((a, i, arr) => (
               <span key={a} className="flex items-center">
                 <Link
-                  href={`/search?q=${encodeURIComponent(a.replace(" Biglietti", ""))}`}
+                  href={`/cerca?q=${encodeURIComponent(a.replace(" Biglietti", ""))}`}
                   className="text-[#1a2744] hover:underline"
                 >
                   {a}

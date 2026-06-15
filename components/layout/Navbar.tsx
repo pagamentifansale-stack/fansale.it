@@ -36,7 +36,7 @@ export default function Navbar() {
           className="flex-1 flex items-center bg-white rounded overflow-hidden"
           onSubmit={(e) => {
             e.preventDefault();
-            window.location.href = `/search?q=${query}`;
+            window.location.href = `/cerca?q=${query}`;
           }}
         >
           <input
@@ -104,7 +104,7 @@ export default function Navbar() {
           {categories.map((cat) => (
             <Link
               key={cat}
-              href={`/search?category=${encodeURIComponent(cat)}`}
+              href={`/cerca?category=${encodeURIComponent(cat)}`}
               onClick={() => setMenuOpen(false)}
               className="flex items-center justify-between px-5 py-3.5 hover:bg-gray-50 border-b border-gray-100 last:border-0 text-sm font-medium transition-colors"
             >

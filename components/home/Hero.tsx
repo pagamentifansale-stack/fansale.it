@@ -83,7 +83,7 @@ export default function Hero() {
                 Vendi i tuoi biglietti
               </Link>
               <Link
-                href="/search"
+                href="/cerca"
                 className="bg-white/10 hover:bg-white/20 text-white font-bold px-6 py-3 rounded-lg transition-colors text-center border border-white/20"
               >
                 Cerca biglietti

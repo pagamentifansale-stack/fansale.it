@@ -370,7 +370,7 @@ function EventPageContent() {
         <div className="bg-white border border-gray-200 rounded-xl p-12 text-center">
           <p className="text-gray-500 font-medium">Evento non trovato</p>
           <Link
-            href="/search"
+            href="/cerca"
             className="text-[#1a2744] hover:underline text-sm mt-2 block"
           >
             ← Torna alla ricerca
@@ -393,11 +393,11 @@ function EventPageContent() {
             fanSALE
           </Link>
           <ChevronRight size={14} className="text-gray-400" />
-          <Link href="/search?category=Concerti" className="hover:underline">
+          <Link href="/cerca?category=Concerti" className="hover:underline">
             Concerti
           </Link>
           <ChevronRight size={14} className="text-gray-400" />
-          <Link href="/search?category=Pop+Rock" className="hover:underline">
+          <Link href="/cerca?category=Pop+Rock" className="hover:underline">
             Pop & Rock
           </Link>
           <ChevronRight size={14} className="text-gray-400" />
@@ -478,7 +478,7 @@ function EventPageContent() {
                   </p>
                 </div>
                 <Link
-                  href={`/event/${event.slug}/tickets`}
+                  href={`/evento/${event.slug}/biglietti`}
                   className="bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-bold text-sm px-5 py-2.5 rounded-lg transition-colors whitespace-nowrap shrink-0"
                 >
                   Visualizza
@@ -614,7 +614,7 @@ function EventPageContent() {
             ].map((a, i, arr) => (
               <span key={a} className="flex items-center">
                 <Link
-                  href={`/search?q=${encodeURIComponent(a.replace(" Biglietti", ""))}`}
+                  href={`/cerca?q=${encodeURIComponent(a.replace(" Biglietti", ""))}`}
                   className="text-[#1a2744] hover:underline"
                 >
                   {a}

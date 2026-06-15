@@ -12,7 +12,7 @@ export default function MobileNav() {
           Home
         </Link>
         <Link
-          href="/search"
+          href="/cerca"
           className="flex flex-col items-center gap-1 text-xs text-gray-400"
         >
           Search

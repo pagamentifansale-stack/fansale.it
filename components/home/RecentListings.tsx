@@ -21,7 +21,7 @@ export default function RecentListings() {
           {recommendedArtists.map((artist, i) => (
             <span key={artist} className="flex items-center">
               <Link
-                href={`/search?q=${encodeURIComponent(artist)}`}
+                href={`/cerca?q=${encodeURIComponent(artist)}`}
                 className="text-sm text-[#1a2744] hover:underline"
               >
                 {artist}

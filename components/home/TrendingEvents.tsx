@@ -67,7 +67,7 @@ export default function TrendingEvents() {
           {events.map((event) => (
             <Link
               key={event.id}
-              href={`/event/${event.slug}`}
+              href={`/evento/${event.slug}`}
               className="group relative aspect-[3/4] rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
             >
               <Image

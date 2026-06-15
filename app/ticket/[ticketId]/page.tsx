@@ -75,7 +75,7 @@ function TicketPageInner({ ticketId }: { ticketId: string }) {
             Il biglietto richiesto non esiste o non è più disponibile.
           </p>
           <Link
-            href="/search"
+            href="/cerca"
             className="text-[#1a2744] hover:underline text-sm font-medium"
           >
             ← Torna alla ricerca
@@ -115,7 +115,7 @@ function TicketPageInner({ ticketId }: { ticketId: string }) {
   const canCheckout = !isLocked && missingNames === 0;
 
   const checkoutHref = canCheckout
-    ? `/checkout/${ticketId}?event=${eventSlug}&qty=${safeQty}&attendees=${encodeURIComponent(
+    ? `/acquisto/${ticketId}?event=${eventSlug}&qty=${safeQty}&attendees=${encodeURIComponent(
         attendeeNames.slice(0, safeQty).join("|"),
       )}`
     : "#";
@@ -126,7 +126,7 @@ function TicketPageInner({ ticketId }: { ticketId: string }) {
       <div className="bg-white border-b border-gray-200 px-4 py-3">
         <div className="max-w-7xl mx-auto">
           <Link
-            href={eventSlug ? `/event/${eventSlug}/tickets` : "/search"}
+            href={eventSlug ? `/evento/${eventSlug}/biglietti` : "/cerca"}
             className="flex items-center gap-1 text-[#1a2744] text-sm font-medium hover:underline"
           >
             <ArrowLeft size={16} />
