@@ -421,68 +421,75 @@ function EventPageContent() {
         ratingCount={artist.ratingCount}
       />
 
-      <div className="max-w-5xl mx-auto px-4 py-6 space-y-5">
+      <div className="max-w-5xl mx-auto px-3 sm:px-4 py-4 sm:py-6 space-y-4">
         {/* Artist bio intro */}
-        <div className="bg-white border border-gray-200 rounded-xl p-5">
-          <p className="text-sm text-gray-700 leading-relaxed">
+        <div className="bg-white border border-gray-200 rounded-xl px-4 py-3">
+          <p className="text-xs sm:text-sm text-gray-700 leading-relaxed">
             {artist.name} - {bioLines[0]}
           </p>
         </div>
 
         {/* Tickets section */}
         <div className="bg-white border border-gray-200 rounded-xl overflow-hidden">
-          <div className="px-5 py-4 border-b border-gray-100">
-            <h2 className="text-lg font-bold text-gray-900">Biglietti</h2>
+          <div className="px-3 sm:px-5 py-3 border-b border-gray-100">
+            <h2 className="text-base font-bold text-gray-900">Biglietti</h2>
           </div>
           <div className="divide-y divide-gray-100">
             {artist.events.map((event) => (
               <div
                 key={event.id}
-                className="flex items-center gap-4 px-5 py-4 hover:bg-gray-50 transition-colors"
+                className="flex items-center gap-2 sm:gap-4 px-3 sm:px-5 py-3 hover:bg-gray-50 transition-colors"
               >
                 {/* Date */}
-                <div className="text-center shrink-0 w-20">
-                  <p className="text-xs text-gray-500">{event.dayName}</p>
-                  <p className="text-2xl font-black text-[#1a2744] leading-none">
-                    {event.day}. {event.month}{" "}
-                    <sup className="text-sm font-bold">{event.year}</sup>
+                <div className="text-center shrink-0 w-14 sm:w-20">
+                  <p className="text-xs text-gray-500 leading-tight">
+                    {event.dayName}
+                  </p>
+                  <p className="text-lg sm:text-2xl font-black text-[#1a2744] leading-none">
+                    {event.day}. {event.month}
+                  </p>
+                  <p className="text-xs font-bold text-gray-500">
+                    {event.year}
                   </p>
                 </div>
 
                 {/* Event info */}
                 <div className="flex-1 min-w-0">
-                  <p className="font-black text-xl text-[#1a2744]">
+                  <p className="font-black text-base sm:text-xl text-[#1a2744] truncate">
                     {event.city}
                   </p>
-                  <p className="text-sm text-gray-500 flex items-center gap-1">
-                    <Clock size={12} /> {event.time} ore &nbsp;·&nbsp;{" "}
-                    <MapPin size={12} /> {event.venue}
+                  <p className="text-xs text-gray-500 flex items-center gap-1 truncate">
+                    <Clock size={10} /> {event.time} &nbsp;·&nbsp;
+                    <MapPin size={10} />{" "}
+                    <span className="truncate">{event.venue}</span>
                   </p>
                 </div>
 
-                {/* Trust badges */}
-                <div className="flex items-center gap-1 shrink-0">
-                  <div className="w-8 h-8 rounded-full border-2 border-sky-400 bg-sky-50 flex items-center justify-center">
-                    <Handshake size={16} className="text-sky-500" />
+                {/* Trust badges — hidden on very small screens */}
+                <div className="hidden sm:flex items-center gap-1 shrink-0">
+                  <div className="w-7 h-7 rounded-full border-2 border-sky-400 bg-sky-50 flex items-center justify-center">
+                    <Handshake size={13} className="text-sky-500" />
                   </div>
-                  <div className="w-8 h-8 rounded-full border-2 border-green-400 bg-green-50 flex items-center justify-center">
-                    <CheckCircle size={16} className="text-green-500" />
+                  <div className="w-7 h-7 rounded-full border-2 border-green-400 bg-green-50 flex items-center justify-center">
+                    <CheckCircle size={13} className="text-green-500" />
                   </div>
                 </div>
 
                 {/* Price + CTA */}
-                <div className="text-right shrink-0">
-                  <p className="text-xs text-gray-500">Offerte da</p>
-                  <p className="font-black text-lg text-[#1a2744]">
-                    € {event.minPrice.toFixed(2).replace(".", ",")}
-                  </p>
+                <div className="flex flex-col items-end gap-1 shrink-0">
+                  <div className="text-right">
+                    <p className="text-xs text-gray-500">Da</p>
+                    <p className="font-black text-sm sm:text-base text-[#1a2744]">
+                      € {event.minPrice.toFixed(2).replace(".", ",")}
+                    </p>
+                  </div>
+                  <Link
+                    href={`/evento/${event.slug}/biglietti`}
+                    className="bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-bold text-xs sm:text-sm px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg transition-colors whitespace-nowrap"
+                  >
+                    Visualizza
+                  </Link>
                 </div>
-                <Link
-                  href={`/evento/${event.slug}/biglietti`}
-                  className="bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-bold text-sm px-5 py-2.5 rounded-lg transition-colors whitespace-nowrap shrink-0"
-                >
-                  Visualizza
-                </Link>
               </div>
             ))}
           </div>

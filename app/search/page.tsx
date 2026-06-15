@@ -76,30 +76,30 @@ function SearchContent() {
   const uniqueArtists = Array.from(new Set(events.map((e) => e.artist)));
 
   return (
-    <main className="flex-1 max-w-5xl mx-auto w-full px-4 py-6">
+    <main className="flex-1 max-w-5xl mx-auto w-full px-3 sm:px-4 py-4 sm:py-6">
       {/* Info banner */}
-      <div className="bg-white border border-gray-200 rounded-lg px-4 py-3 mb-5 text-sm text-gray-600">
+      <div className="bg-white border border-gray-200 rounded-lg px-3 py-2.5 mb-4 text-xs sm:text-sm text-gray-600">
         fanSALE è un mercato secondario di rivendita di biglietti, dove il
         prezzo dei biglietti è sempre uguale al prezzo originale.
       </div>
 
       {/* Search bar */}
-      <div className="flex gap-2 mb-4">
+      <div className="flex gap-2 mb-3">
         <div className="flex-1 flex items-center bg-white border border-gray-300 rounded-lg overflow-hidden focus-within:border-[#1a2744] focus-within:ring-1 focus-within:ring-[#1a2744]">
-          <Search size={16} className="ml-3 text-gray-400 shrink-0" />
+          <Search size={15} className="ml-3 text-gray-400 shrink-0" />
           <input
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Cerca per evento, artista, località..."
-            className="flex-1 px-3 py-2.5 text-sm outline-none bg-transparent"
+            className="flex-1 px-2 py-2.5 text-sm outline-none bg-transparent"
           />
         </div>
         <button
           onClick={() => setShowFilters(!showFilters)}
-          className={`flex items-center gap-2 border rounded-lg px-4 py-2.5 text-sm font-medium transition-colors ${showFilters ? "bg-[#1a2744] text-white border-[#1a2744]" : "bg-white text-gray-700 border-gray-300 hover:bg-gray-50"}`}
+          className={`flex items-center gap-1.5 border rounded-lg px-3 py-2 text-sm font-medium transition-colors ${showFilters ? "bg-[#1a2744] text-white border-[#1a2744]" : "bg-white text-gray-700 border-gray-300 hover:bg-gray-50"}`}
         >
-          Filtri <SlidersHorizontal size={14} />
+          Filtri <SlidersHorizontal size={13} />
         </button>
       </div>
 
@@ -197,62 +197,57 @@ function SearchContent() {
 
       {/* Events section */}
       {!loading && events.length > 0 && (
-        <div className="bg-white border border-gray-200 rounded-xl mb-5 overflow-hidden">
-          <div className="px-5 py-4 border-b border-gray-100">
-            <h2 className="text-lg font-bold text-gray-900">Eventi</h2>
+        <div className="bg-white border border-gray-200 rounded-xl mb-4 overflow-hidden">
+          <div className="px-3 sm:px-5 py-3 border-b border-gray-100">
+            <h2 className="text-base font-bold text-gray-900">Eventi</h2>
           </div>
           <div className="divide-y divide-gray-100">
             {events.map((event) => (
               <div
                 key={event.id}
-                className="flex items-center gap-4 px-5 py-4 hover:bg-gray-50 transition-colors"
+                className="flex items-center gap-3 px-3 sm:px-5 py-3 hover:bg-gray-50 transition-colors"
               >
                 {/* Artist image */}
-                <div className="w-20 h-20 rounded-lg overflow-hidden shrink-0 relative bg-gray-200">
+                <div className="w-14 h-14 sm:w-20 sm:h-20 rounded-lg overflow-hidden shrink-0 relative bg-gray-200">
                   <Image
                     src={getArtistImage(event.artist)}
                     alt={event.artist}
                     fill
                     className="object-cover"
-                    sizes="80px"
+                    sizes="56px"
                   />
                 </div>
                 <div className="flex-1 min-w-0">
                   <Link
                     href={`/evento/${event.slug}`}
-                    className="font-bold text-[#1a2744] hover:underline text-base leading-tight block truncate"
+                    className="font-bold text-[#1a2744] hover:underline text-sm leading-tight block truncate"
                   >
                     {event.title}
                   </Link>
                   <p className="text-xs text-gray-500 mt-0.5 flex items-center gap-1">
-                    <Calendar size={11} /> {formatDate(event.event_date)}
+                    <Calendar size={10} /> {formatDate(event.event_date)}
                   </p>
-                  <p className="text-xs text-gray-500 flex items-center gap-1">
-                    <MapPin size={11} /> {event.venue}, {event.city}
+                  <p className="text-xs text-gray-500 flex items-center gap-1 truncate">
+                    <MapPin size={10} /> {event.venue}, {event.city}
                   </p>
-                  <p className="text-xs text-gray-400 mt-1">
+                  <p className="text-xs text-gray-400 mt-0.5">
                     {event.ticket_count}{" "}
-                    {event.ticket_count === 1
-                      ? "offerta disponibile"
-                      : "offerte disponibili"}
+                    {event.ticket_count === 1 ? "offerta" : "offerte"}{" "}
+                    disponibili
                   </p>
                 </div>
-                <div className="flex items-center gap-3 shrink-0">
-                  <div className="hidden sm:flex items-center gap-1">
-                    <CheckCircle size={26} className="text-green-500" />
-                    <Handshake size={26} className="text-sky-500" />
-                  </div>
+                <div className="flex flex-col items-end gap-1.5 shrink-0">
                   <div className="text-right">
-                    <p className="text-xs text-gray-500">Offerte da</p>
+                    <p className="text-xs text-gray-500">Da</p>
                     <p className="font-bold text-[#1a2744] text-sm">
                       {event.min_price
-                        ? `EUR ${event.min_price.toFixed(2)}`
+                        ? `€ ${event.min_price.toFixed(2).replace(".", ",")}`
                         : "N/D"}
                     </p>
                   </div>
                   <Link
                     href={`/evento/${event.slug}`}
-                    className="bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-bold text-sm px-4 py-2 rounded-lg transition-colors whitespace-nowrap"
+                    className="bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-bold text-xs px-3 py-1.5 rounded-lg transition-colors whitespace-nowrap"
                   >
                     Vedi
                   </Link>
