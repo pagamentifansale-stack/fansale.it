@@ -23,7 +23,7 @@ import PaymentStep from "./steps/PaymentStep";
 import { getMockTicketData, MockEvent, MockTicket } from "@/lib/mockTickets";
 
 const STEPS = [
-  { id: "account", label: "Account", icon: User },
+  { id: "account", label: "Accesso", icon: User },
   { id: "details", label: "Dati", icon: User },
   { id: "delivery", label: "Consegna", icon: Truck },
   { id: "payment", label: "Pagamento", icon: CreditCard },

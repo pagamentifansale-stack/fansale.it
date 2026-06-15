@@ -99,7 +99,7 @@ function SearchContent() {
           onClick={() => setShowFilters(!showFilters)}
           className={`flex items-center gap-2 border rounded-lg px-4 py-2.5 text-sm font-medium transition-colors ${showFilters ? "bg-[#1a2744] text-white border-[#1a2744]" : "bg-white text-gray-700 border-gray-300 hover:bg-gray-50"}`}
         >
-          Filters <SlidersHorizontal size={14} />
+          Filtri <SlidersHorizontal size={14} />
         </button>
       </div>
 
