@@ -14,6 +14,8 @@ import {
   ChevronDown,
   ChevronUp,
   Users,
+  Handshake,
+  CheckCircle,
 } from "lucide-react";
 import { useCountdown } from "@/hooks/useCountdown";
 import { formatCurrency, calculateTotal } from "@/utils/formatCurrency";
@@ -123,308 +125,286 @@ function TicketPageInner({ ticketId }: { ticketId: string }) {
   return (
     <div className="min-h-screen bg-gray-100">
       {/* Back link */}
-      <div className="bg-white border-b border-gray-200 px-4 py-3">
-        <div className="max-w-7xl mx-auto">
+      <div className="bg-white border-b border-gray-200 px-4 py-2.5">
+        <div className="max-w-4xl mx-auto">
           <Link
             href={eventSlug ? `/evento/${eventSlug}/biglietti` : "/cerca"}
             className="flex items-center gap-1 text-[#1a2744] text-sm font-medium hover:underline"
           >
-            <ArrowLeft size={16} />
+            <ArrowLeft size={15} />
             Torna a tutte le offerte
           </Link>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 py-6">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* LEFT */}
-          <div className="space-y-4">
-            {/* Event header */}
-            <div className="bg-white rounded-xl border border-gray-200 p-5">
-              <h1 className="text-xl font-black text-gray-900">
-                {event.artist}
-              </h1>
-              <p className="text-gray-600 font-medium">{event.eventTitle}</p>
-              <div className="flex flex-wrap gap-3 mt-3 text-sm text-gray-600">
-                <span className="flex items-center gap-1">
-                  <MapPin size={14} /> {event.venue}, {event.city}
-                </span>
-                <span className="flex items-center gap-1">
-                  <Calendar size={14} /> {event.date}
-                </span>
-                <span className="flex items-center gap-1">🕘 {event.time}</span>
-              </div>
-            </div>
+      <div className="max-w-4xl mx-auto px-3 sm:px-4 py-3 sm:py-5 space-y-3">
+        {/* Event header — compact on mobile */}
+        <div className="bg-white rounded-xl border border-gray-200 px-4 py-3">
+          <h1 className="text-base font-black text-gray-900 leading-tight">
+            {event.artist}
+          </h1>
+          <p className="text-xs text-gray-500 mt-0.5">{event.eventTitle}</p>
+          <p className="text-xs text-gray-500 mt-1 flex flex-wrap gap-x-3 gap-y-0.5">
+            <span className="flex items-center gap-1">
+              <Calendar size={11} /> {event.date} {event.time}
+            </span>
+            <span className="flex items-center gap-1">
+              <MapPin size={11} /> {event.venue}, {event.city}
+            </span>
+          </p>
+        </div>
 
-            {/* Lock banner */}
-            {isLocked && ticket.locked_until && (
-              <LockBanner lockedUntil={ticket.locked_until} />
-            )}
+        {/* Lock banner */}
+        {isLocked && ticket.locked_until && (
+          <LockBanner lockedUntil={ticket.locked_until} />
+        )}
 
-            {/* Ticket info + purchase */}
-            <div className="bg-white rounded-xl border border-gray-200 p-5">
-              <div className="flex items-center justify-between mb-4">
-                <div>
-                  <p className="text-sm text-gray-500 mb-1">Quantità</p>
-                  <div className="flex items-center gap-2">
-                    <button
-                      onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                      disabled={quantity <= 1}
-                      className="w-7 h-7 rounded-full border border-gray-300 flex items-center justify-center text-gray-600 hover:bg-gray-50 disabled:opacity-40"
-                    >
-                      −
-                    </button>
-                    <span className="font-bold text-lg w-6 text-center">
-                      {safeQty}
-                    </span>
-                    <button
-                      onClick={() =>
-                        setQuantity(Math.min(maxQty, quantity + 1))
-                      }
-                      disabled={quantity >= maxQty}
-                      className="w-7 h-7 rounded-full border border-gray-300 flex items-center justify-center text-gray-600 hover:bg-gray-50 disabled:opacity-40"
-                    >
-                      +
-                    </button>
-                    <span className="text-xs text-gray-400 ml-1">
-                      (max {maxQty} disponibili)
-                    </span>
-                  </div>
-                </div>
-                <div className="text-right">
-                  <p className="text-xs text-gray-500">Prezzo fisso</p>
-                  <p className="text-2xl font-black text-[#1a2744]">
-                    {formatCurrency(total)}
-                  </p>
-                  <p className="text-xs text-gray-400">incl. IVA</p>
-                </div>
-              </div>
-
-              {/* Selected seats list */}
-              {ticket.isNumbered && selectedSeats.length > 0 && (
-                <div className="border border-gray-100 rounded-lg divide-y divide-gray-100 mb-4">
-                  {selectedSeats.map((seat, i) => (
-                    <div
-                      key={i}
-                      className="flex items-center justify-between px-4 py-3 text-sm"
-                    >
-                      <span className="text-gray-700 font-medium">
-                        {ticket.section} · {seat}
-                      </span>
-                      <span className="font-semibold text-gray-800">
-                        {formatCurrency(ticket.price)}
-                      </span>
-                    </div>
-                  ))}
-                  <div className="px-4 py-2 text-xs text-gray-400">
-                    Prezzo originale: {formatCurrency(ticket.price)} / biglietto
-                  </div>
-                </div>
-              )}
-
-              {/* Price breakdown */}
-              <div className="space-y-2 text-sm border-t border-gray-100 pt-4">
-                <div className="flex justify-between text-gray-600">
-                  <span>
-                    {safeQty} bigliett{safeQty === 1 ? "o" : "i"} a{" "}
-                    {formatCurrency(ticket.price)}:
-                  </span>
-                  <span>{formatCurrency(subtotal)}</span>
-                </div>
-                <div className="flex justify-between text-gray-600">
-                  <span>Commissioni di servizio:</span>
-                  <span>{formatCurrency(serviceFee)}</span>
-                </div>
-                <div className="flex justify-between text-gray-600">
-                  <span>Consegna del biglietto con:</span>
-                  <span className="font-semibold text-[#1a2744]">fanSALE</span>
-                </div>
-                <div className="flex justify-between font-black text-lg text-gray-900 border-t border-gray-200 pt-2 mt-2">
-                  <span>Prezzo fisso:</span>
-                  <span>{formatCurrency(total)}</span>
-                </div>
-              </div>
-
-              {/* Buy button */}
-              <Link
-                href={checkoutHref}
-                onClick={(e) => {
-                  if (!canCheckout) e.preventDefault();
-                }}
-                className={`mt-4 w-full block text-center py-4 rounded-lg font-black text-lg transition-colors ${
-                  isLocked
-                    ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-                    : missingNames > 0
-                      ? "bg-gray-200 text-gray-400 cursor-not-allowed"
-                      : "bg-yellow-400 hover:bg-yellow-500 text-gray-900"
-                }`}
+        {/* Ticket table — matches reference screenshot */}
+        <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
+          {/* Header row */}
+          <div className="grid grid-cols-[1fr_auto_auto] gap-2 px-3 py-2 bg-gray-50 border-b border-gray-100 text-xs font-semibold text-gray-500 uppercase tracking-wide">
+            <span>Quantità</span>
+            <span className="text-center">Settore / Posto</span>
+            <span className="text-right">Ordine</span>
+          </div>
+          {/* Ticket row */}
+          <div className="grid grid-cols-[auto_1fr_auto] gap-3 px-3 py-3 items-center border-b border-gray-100">
+            {/* Qty selector */}
+            <div className="flex items-center gap-1.5">
+              <button
+                onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                disabled={quantity <= 1}
+                className="w-6 h-6 rounded border border-gray-300 flex items-center justify-center text-gray-600 text-sm hover:bg-gray-50 disabled:opacity-40"
               >
-                {isLocked
-                  ? "Temporaneamente non disponibile"
-                  : missingNames > 0
-                    ? `Inserisci ${missingNames} nome${missingNames > 1 ? "i" : ""} mancante${missingNames > 1 ? "i" : ""}`
-                    : "Acquista"}
-              </Link>
-              {missingNames > 0 && (
-                <p className="text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded-lg p-2 mt-2 text-center">
-                  ⚠️ Inserisci il nome e cognome di ogni partecipante per
-                  procedere all&apos;acquisto.
-                </p>
-              )}
-            </div>
-
-            {/* Attendee names — shown when numbered seats */}
-            {ticket.isNumbered && safeQty > 0 && (
-              <div className="bg-white rounded-xl border border-gray-200 p-5">
-                <div className="flex items-center gap-2 mb-1">
-                  <Users size={16} className="text-[#1a2744]" />
-                  <p className="text-sm font-semibold text-gray-800">
-                    Dati degli intestatari
-                  </p>
-                </div>
-                <p className="text-xs text-gray-500 mb-4">
-                  I biglietti sono nominativi. Inserisci nome e cognome di ogni
-                  partecipante esattamente come sul documento d&apos;identità.
-                </p>
-                <div className="space-y-3">
-                  {selectedSeats.map((seat, i) => (
-                    <div key={i}>
-                      <label className="block text-xs font-semibold text-gray-600 mb-1">
-                        Partecipante {i + 1} —{" "}
-                        <span className="font-normal text-gray-500">
-                          {seat}
-                        </span>
-                      </label>
-                      <input
-                        type="text"
-                        value={attendeeNames[i] || ""}
-                        onChange={(e) => handleAttendeeName(i, e.target.value)}
-                        placeholder="Nome e Cognome"
-                        className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm outline-none focus:border-[#1a2744] focus:ring-1 focus:ring-[#1a2744] transition-colors"
-                      />
-                    </div>
-                  ))}
-                </div>
-                <p className="text-xs text-amber-600 bg-amber-50 border border-amber-200 rounded-lg p-2 mt-3">
-                  ⚠️ I nomi inseriti non potranno essere modificati dopo
-                  l&apos;acquisto. Porta un documento d&apos;identità al
-                  concerto.
-                </p>
-              </div>
-            )}
-
-            {/* Description */}
-            <div className="bg-white rounded-xl border border-gray-200 p-5">
-              <p className="text-sm font-semibold text-gray-700 mb-2">
-                Descrizione
-              </p>
-              <p className="text-sm text-gray-600 leading-relaxed">
-                {showFullDesc
-                  ? ticket.description
-                  : ticket.description.slice(0, 100) +
-                    (ticket.description.length > 100 ? "..." : "")}
-              </p>
-              {ticket.description.length > 100 && (
-                <button
-                  onClick={() => setShowFullDesc(!showFullDesc)}
-                  className="text-xs text-[#1a2744] font-semibold mt-1 flex items-center gap-1 hover:underline"
-                >
-                  {showFullDesc ? (
-                    <>
-                      <ChevronUp size={12} /> Mostra meno
-                    </>
-                  ) : (
-                    <>
-                      Continua a leggere <ChevronDown size={12} />
-                    </>
-                  )}
-                </button>
-              )}
-            </div>
-
-            {/* Seller info */}
-            <div className="bg-white rounded-xl border border-gray-200 p-5">
-              <p className="text-sm font-semibold text-gray-700 mb-3">
-                Venditore
-              </p>
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-[#1a2744] flex items-center justify-center text-white font-bold text-sm">
-                  {ticket.seller.username[0].toUpperCase()}
-                </div>
-                <div>
-                  <p className="font-semibold text-gray-800 flex items-center gap-1">
-                    {ticket.seller.username}
-                    {ticket.seller.verified && (
-                      <Shield size={14} className="text-green-500" />
-                    )}
-                  </p>
-                  <div className="flex items-center gap-2 text-xs text-gray-500">
-                    <span className="flex items-center gap-0.5">
-                      <Star
-                        size={11}
-                        className="text-yellow-400 fill-yellow-400"
-                      />
-                      {ticket.seller.rating}
-                    </span>
-                    <span>·</span>
-                    <span>{ticket.seller.successful_sales} vendite</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Actions */}
-            <div className="flex gap-3">
-              <button className="flex items-center gap-2 text-sm text-gray-600 hover:text-yellow-500 transition-colors">
-                <Heart size={16} /> <span>Aggiungi ai preferiti</span>
+                −
               </button>
-              <button className="flex items-center gap-2 text-sm text-gray-600 hover:text-[#1a2744] transition-colors">
-                <Share2 size={16} /> <span>Dillo a un amico</span>
+              <span className="font-bold text-sm w-5 text-center">
+                {safeQty}
+              </span>
+              <button
+                onClick={() => setQuantity(Math.min(maxQty, quantity + 1))}
+                disabled={quantity >= maxQty}
+                className="w-6 h-6 rounded border border-gray-300 flex items-center justify-center text-gray-600 text-sm hover:bg-gray-50 disabled:opacity-40"
+              >
+                +
               </button>
+            </div>
+            {/* Section info */}
+            <div className="min-w-0">
+              <p className="font-semibold text-sm text-gray-800 truncate">
+                {ticket.section}
+              </p>
+              {ticket.row && (
+                <p className="text-xs text-gray-500">{ticket.row}</p>
+              )}
+              <p className="text-xs font-bold text-gray-700 mt-0.5">
+                Prezzo fisso € {ticket.price.toFixed(2).replace(".", ",")}
+              </p>
+            </div>
+            {/* Badges */}
+            <div className="flex items-center gap-1 shrink-0">
+              <div className="w-7 h-7 rounded-full border-2 border-sky-400 bg-sky-50 flex items-center justify-center">
+                <Handshake size={13} className="text-sky-500" />
+              </div>
+              <div className="w-7 h-7 rounded-full border-2 border-green-400 bg-green-50 flex items-center justify-center">
+                <CheckCircle size={13} className="text-green-500" />
+              </div>
             </div>
           </div>
 
-          {/* RIGHT: Trust badges */}
-          <div className="space-y-4">
-            <div className="bg-white rounded-xl border border-gray-200 p-5">
-              <div className="space-y-3">
-                <div className="flex items-start gap-3">
-                  <Shield
-                    size={18}
-                    className="text-green-500 mt-0.5 shrink-0"
+          {/* Seleziona numero biglietti label */}
+          <div className="px-3 py-2 text-xs text-gray-500 border-b border-gray-100">
+            Seleziona il numero di biglietti: <strong>{safeQty}</strong>
+            <span className="text-gray-400 ml-2">
+              (max {maxQty} disponibili)
+            </span>
+          </div>
+
+          {/* Price breakdown — receipt style */}
+          <div className="divide-y divide-gray-50">
+            <div className="flex justify-between px-3 py-2 text-sm">
+              <span className="text-gray-600">Suddivisione offerta:</span>
+              <span className="font-semibold text-gray-800">Totale</span>
+            </div>
+            <div className="flex justify-between px-3 py-2 text-sm">
+              <span className="text-gray-600">
+                {safeQty} bigliett{safeQty === 1 ? "o" : "i"} ×{" "}
+                {formatCurrency(ticket.price)}
+              </span>
+              <span className="font-semibold">{formatCurrency(subtotal)}</span>
+            </div>
+            <div className="flex justify-between px-3 py-2 text-sm">
+              <span className="text-gray-600">Commissioni di servizio:</span>
+              <span className="font-semibold">
+                {formatCurrency(serviceFee)}
+              </span>
+            </div>
+            <div className="flex justify-between px-3 py-2 text-sm">
+              <span className="text-gray-600">Consegna del biglietto con:</span>
+              <span className="font-semibold text-[#1a2744]">TicketOne</span>
+            </div>
+            <div className="flex justify-between px-3 py-2.5 bg-gray-50">
+              <span className="font-black text-gray-900">Prezzo fisso:</span>
+              <span className="font-black text-lg text-gray-900">
+                {formatCurrency(total)}
+              </span>
+            </div>
+            <div className="px-3 py-1.5 text-right">
+              <span className="text-xs text-gray-400">
+                incl. IVA, più costi di consegna
+              </span>
+            </div>
+          </div>
+
+          {/* Buy button */}
+          <div className="px-3 pb-3 pt-1">
+            <Link
+              href={checkoutHref}
+              onClick={(e) => {
+                if (!canCheckout) e.preventDefault();
+              }}
+              className={`w-full block text-center py-3.5 rounded-lg font-black text-base transition-colors ${
+                isLocked
+                  ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                  : missingNames > 0
+                    ? "bg-gray-200 text-gray-400 cursor-not-allowed"
+                    : "bg-yellow-400 hover:bg-yellow-500 text-gray-900"
+              }`}
+            >
+              {isLocked
+                ? "Temporaneamente non disponibile"
+                : missingNames > 0
+                  ? `Inserisci ${missingNames} nome${missingNames > 1 ? "i" : ""}`
+                  : "Acquista"}
+            </Link>
+            {missingNames > 0 && (
+              <p className="text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded-lg p-2 mt-2 text-center">
+                ⚠️ Inserisci il nome e cognome di ogni partecipante per
+                procedere all&apos;acquisto.
+              </p>
+            )}
+          </div>
+        </div>
+
+        {/* Attendee names */}
+        {ticket.isNumbered && safeQty > 0 && (
+          <div className="bg-white rounded-xl border border-gray-200 p-4">
+            <div className="flex items-center gap-2 mb-1">
+              <Users size={15} className="text-[#1a2744]" />
+              <p className="text-sm font-semibold text-gray-800">
+                Dati degli intestatari
+              </p>
+            </div>
+            <p className="text-xs text-gray-500 mb-3">
+              I biglietti sono nominativi. Inserisci nome e cognome esattamente
+              come sul documento d&apos;identità.
+            </p>
+            <div className="space-y-2">
+              {selectedSeats.map((seat, i) => (
+                <div key={i}>
+                  <label className="block text-xs font-semibold text-gray-600 mb-1">
+                    Partecipante {i + 1} —{" "}
+                    <span className="font-normal text-gray-400">{seat}</span>
+                  </label>
+                  <input
+                    type="text"
+                    value={attendeeNames[i] || ""}
+                    onChange={(e) => handleAttendeeName(i, e.target.value)}
+                    placeholder="Nome e Cognome"
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm outline-none focus:border-[#1a2744] focus:ring-1 focus:ring-[#1a2744]"
                   />
-                  <div>
-                    <p className="text-sm font-semibold text-gray-800">
-                      Biglietto verificato
-                    </p>
-                    <p className="text-xs text-gray-500">
-                      Ogni biglietto viene controllato prima della vendita
-                    </p>
-                  </div>
                 </div>
-                <div className="flex items-start gap-3">
-                  <Zap size={18} className="text-yellow-500 mt-0.5 shrink-0" />
-                  <div>
-                    <p className="text-sm font-semibold text-gray-800">
-                      Consegna veloce
-                    </p>
-                    <p className="text-xs text-gray-500">
-                      Ricevi il nuovo biglietto a tuo nome entro 24h
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <Star size={18} className="text-blue-500 mt-0.5 shrink-0" />
-                  <div>
-                    <p className="text-sm font-semibold text-gray-800">
-                      Prezzo originale
-                    </p>
-                    <p className="text-xs text-gray-500">
-                      Il prezzo non supera mai il valore nominale del biglietto
-                    </p>
-                  </div>
+              ))}
+            </div>
+            <p className="text-xs text-amber-600 bg-amber-50 border border-amber-200 rounded-lg p-2 mt-3">
+              ⚠️ I nomi non potranno essere modificati dopo l&apos;acquisto.
+              Porta un documento d&apos;identità al concerto.
+            </p>
+          </div>
+        )}
+
+        {/* Trust badges — horizontal on mobile */}
+        <div className="bg-white rounded-xl border border-gray-200 p-4">
+          <div className="grid grid-cols-3 gap-3 text-center">
+            <div className="flex flex-col items-center gap-1">
+              <Shield size={22} className="text-green-500" />
+              <p className="text-xs font-semibold text-gray-700 leading-tight">
+                Biglietto verificato
+              </p>
+            </div>
+            <div className="flex flex-col items-center gap-1">
+              <Zap size={22} className="text-yellow-500" />
+              <p className="text-xs font-semibold text-gray-700 leading-tight">
+                Consegna entro 24h
+              </p>
+            </div>
+            <div className="flex flex-col items-center gap-1">
+              <Star size={22} className="text-blue-500" />
+              <p className="text-xs font-semibold text-gray-700 leading-tight">
+                Prezzo originale
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Description */}
+        <div className="bg-white rounded-xl border border-gray-200 p-4">
+          <p className="text-sm font-semibold text-gray-700 mb-1.5">
+            Descrizione
+          </p>
+          <p className="text-sm text-gray-600 leading-relaxed">
+            {showFullDesc
+              ? ticket.description
+              : ticket.description.slice(0, 120) +
+                (ticket.description.length > 120 ? "..." : "")}
+          </p>
+          {ticket.description.length > 120 && (
+            <button
+              onClick={() => setShowFullDesc(!showFullDesc)}
+              className="text-xs text-[#1a2744] font-semibold mt-1 flex items-center gap-1 hover:underline"
+            >
+              {showFullDesc ? (
+                <>
+                  <ChevronUp size={12} /> Mostra meno
+                </>
+              ) : (
+                <>
+                  Continua a leggere <ChevronDown size={12} />
+                </>
+              )}
+            </button>
+          )}
+        </div>
+
+        {/* Seller + actions */}
+        <div className="bg-white rounded-xl border border-gray-200 p-4">
+          <p className="text-sm font-semibold text-gray-700 mb-2">Venditore</p>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <div className="w-9 h-9 rounded-full bg-[#1a2744] flex items-center justify-center text-white font-bold text-sm">
+                {ticket.seller.username[0].toUpperCase()}
+              </div>
+              <div>
+                <p className="font-semibold text-gray-800 text-sm flex items-center gap-1">
+                  {ticket.seller.username}
+                  {ticket.seller.verified && (
+                    <Shield size={13} className="text-green-500" />
+                  )}
+                </p>
+                <div className="flex items-center gap-1.5 text-xs text-gray-500">
+                  <Star size={10} className="text-yellow-400 fill-yellow-400" />
+                  {ticket.seller.rating} · {ticket.seller.successful_sales}{" "}
+                  vendite
                 </div>
               </div>
+            </div>
+            <div className="flex gap-3">
+              <button className="flex items-center gap-1 text-xs text-gray-500 hover:text-yellow-500">
+                <Heart size={14} /> Preferiti
+              </button>
+              <button className="flex items-center gap-1 text-xs text-gray-500 hover:text-[#1a2744]">
+                <Share2 size={14} /> Condividi
+              </button>
             </div>
           </div>
         </div>

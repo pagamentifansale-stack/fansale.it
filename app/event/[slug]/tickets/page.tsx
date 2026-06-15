@@ -1040,21 +1040,30 @@ function TicketsContent() {
 
         {/* Tickets table */}
         <div className="bg-white border border-gray-200 rounded-xl overflow-hidden">
-          <div className="px-5 py-4 border-b border-gray-100 flex items-center justify-between">
-            <h2 className="text-lg font-bold text-gray-900">Biglietti</h2>
-            <div className="flex gap-2">
-              <button className="flex items-center gap-1.5 border border-gray-300 rounded-lg px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
-                <SlidersHorizontal size={14} /> Filtri
+          {/* Header */}
+          <div className="px-3 sm:px-5 py-3 border-b border-gray-100 flex items-center justify-between">
+            <h2 className="text-base font-bold text-gray-900">Biglietti</h2>
+            <div className="flex gap-1.5">
+              <button className="flex items-center gap-1 border border-gray-300 rounded-lg px-2.5 py-1.5 text-xs text-gray-700 hover:bg-gray-50 transition-colors">
+                <SlidersHorizontal size={12} /> Filtri
               </button>
               <button
                 onClick={() =>
                   setSortBy(sortBy === "price" ? "quantity" : "price")
                 }
-                className="flex items-center gap-1.5 border border-gray-300 rounded-lg px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+                className="flex items-center gap-1 border border-gray-300 rounded-lg px-2.5 py-1.5 text-xs text-gray-700 hover:bg-gray-50 transition-colors"
               >
-                <ArrowUpDown size={14} /> Ordina
+                <ArrowUpDown size={12} /> Ordina
               </button>
             </div>
+          </div>
+
+          {/* Column headers */}
+          <div className="grid grid-cols-[auto_1fr_auto_auto] gap-2 px-3 sm:px-5 py-2 bg-gray-50 border-b border-gray-100 text-xs font-semibold text-gray-500 uppercase tracking-wide">
+            <span>Qtà</span>
+            <span>Settore / Posto</span>
+            <span className="text-right">Ordine</span>
+            <span className="w-5" />
           </div>
 
           <div className="flex">
@@ -1064,32 +1073,31 @@ function TicketsContent() {
                 <Link
                   key={ticket.id}
                   href={`/biglietto/${ticket.id}?event=${slug}`}
-                  className="flex items-center gap-4 px-5 py-4 hover:bg-gray-50 transition-colors group"
+                  className="grid grid-cols-[auto_1fr_auto_auto] gap-2 items-center px-3 sm:px-5 py-3 hover:bg-gray-50 transition-colors group"
                 >
-                  {/* Quantity + section */}
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-4 text-sm text-gray-500 mb-1">
-                      <span>Quantità</span>
-                      <span className="font-bold text-gray-800">
-                        {ticket.quantity}
-                      </span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <span className="font-semibold text-gray-800">
+                  {/* Quantity */}
+                  <div className="w-7 h-7 rounded border border-gray-300 flex items-center justify-center font-bold text-sm text-gray-800 shrink-0">
+                    {ticket.quantity}
+                  </div>
+
+                  {/* Section info */}
+                  <div className="min-w-0">
+                    <div className="flex items-center gap-1 flex-wrap">
+                      <span className="font-semibold text-sm text-gray-800 truncate">
                         {ticket.section}
                       </span>
                       {ticket.row && (
-                        <span className="text-gray-500 text-sm">
+                        <span className="text-gray-500 text-xs">
                           · {ticket.row}
                         </span>
                       )}
                       {ticket.seat && (
-                        <span className="text-gray-500 text-sm">
+                        <span className="text-gray-500 text-xs">
                           · {ticket.seat}
                         </span>
                       )}
                     </div>
-                    <p className="text-sm font-bold text-gray-700 mt-0.5">
+                    <p className="text-xs font-bold text-gray-700 mt-0.5">
                       Prezzo fisso €{" "}
                       {ticket.totalPrice.toFixed(2).replace(".", ",")}
                     </p>
@@ -1098,29 +1106,29 @@ function TicketsContent() {
                   {/* Trust badges */}
                   <div className="flex items-center gap-1 shrink-0">
                     {ticket.fairDeal && (
-                      <div className="w-8 h-8 rounded-full border-2 border-sky-400 bg-sky-50 flex items-center justify-center">
-                        <Handshake size={14} className="text-sky-500" />
+                      <div className="w-7 h-7 rounded-full border-2 border-sky-400 bg-sky-50 flex items-center justify-center">
+                        <Handshake size={13} className="text-sky-500" />
                       </div>
                     )}
                     {ticket.verified && (
-                      <div className="w-8 h-8 rounded-full border-2 border-green-400 bg-green-50 flex items-center justify-center">
-                        <CheckCircle size={14} className="text-green-500" />
+                      <div className="w-7 h-7 rounded-full border-2 border-green-400 bg-green-50 flex items-center justify-center">
+                        <CheckCircle size={13} className="text-green-500" />
                       </div>
                     )}
                   </div>
 
                   {/* Arrow */}
                   <ChevronRight
-                    size={20}
+                    size={18}
                     className="text-yellow-500 group-hover:translate-x-1 transition-transform shrink-0"
                   />
                 </Link>
               ))}
             </div>
 
-            {/* Right: concert background image */}
+            {/* Right: concert background image — desktop only */}
             <div
-              className="hidden lg:block w-64 shrink-0 bg-cover bg-center relative"
+              className="hidden lg:block w-56 shrink-0 bg-cover bg-center relative"
               style={{
                 backgroundImage: `linear-gradient(to right, white, transparent), url('https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?w=400&q=80')`,
               }}
