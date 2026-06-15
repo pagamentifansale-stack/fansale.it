@@ -2,17 +2,15 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import Hero from "@/components/home/Hero";
 import TrendingEvents from "@/components/home/TrendingEvents";
-import FeaturedArtists from "@/components/home/FeaturedArtists";
 import RecentListings from "@/components/home/RecentListings";
 
-export default function Home() {
+export default function MainPage() {
   return (
     <div className="min-h-screen flex flex-col bg-gray-100">
       <Navbar />
       <main className="flex-1">
         <Hero />
         <TrendingEvents />
-        <FeaturedArtists />
         <RecentListings />
       </main>
       <Footer />
