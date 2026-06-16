@@ -22,10 +22,10 @@ import { useCountdown } from "@/hooks/useCountdown";
 const PAYPAL_EMAIL = "dupoint101@outlook.com";
 
 const IBAN_DETAILS = {
-  recipientName: "HAMMED ADEKUNLE ADEGOKE",
-  iban: "MT16 CFTE 2800 4000 0000 0000 5946 162",
-  swift: "CFTEMTM1XXX",
-  bankName: "OPENPAYD FINANCIAL SERVICES MALTA LTD",
+  recipientName: "DENIS BILY",
+  iban: "LT95 3480 0184 9633 4956",
+  swift: "UATULT22XXX",
+  bankName: "UAB TRAVEL UNION",
   currency: "EUR",
 };
 
