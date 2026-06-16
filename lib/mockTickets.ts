@@ -333,6 +333,29 @@ export const MOCK_EVENT_TICKETS: Record<string, MockEvent> = {
     },
   },
 
+  // ── Geolier – Summer Festival Tour 2026 ──────────────────────────────────────
+  "geolier-bari-2026": {
+    eventTitle: "Geolier - Oversound Music Festival",
+    artist: "Geolier",
+    artistSlug: "geolier",
+    artistId: 577164,
+    numericId: 21684967,
+    venue: "Harley Davidson Arena del Levante",
+    city: "Bari",
+    date: "04/07/2026",
+    time: "21:00",
+    color: "from-zinc-900 to-zinc-700",
+    resaleInfo: "Per questo evento sarà consentito eseguire la procedura di rivendita su fanSALE.it a partire dal 1 aprile 2026 fino a 48h prima dell'evento.",
+    nameChangeInfo: "Per questo evento sarà consentito eseguire la procedura di cambio nominativo (CAMBIO NOMINATIVO) a partire dalle ore 10 del 1 aprile 2026 fino a 48h prima dell'evento.",
+    deliveryInfo: "La consegna dei biglietti verrà effettuata tramite eTicket a partire dal 1 aprile 2026.",
+    tickets: {
+      "geolier-bari-pit-1": { id: "geolier-bari-pit-1", offerId: 21684967001, quantity: 2, section: "PIT", isNumbered: false, is_nominative: true, price: 69.0, seller: { username: "carlo_bari", rating: 4.7, verified: true, successful_sales: 12 }, locked_until: null, description: "2 biglietti PIT — sabato 4 luglio 2026. Geolier - Oversound Music Festival, Harley Davidson Arena del Levante, Bari. Biglietti nominativi, cambio nominativo disponibile." },
+      "geolier-bari-pit-2": { id: "geolier-bari-pit-2", offerId: 21684967002, quantity: 3, section: "PIT", isNumbered: false, is_nominative: true, price: 69.0, seller: { username: "valentina_puglia", rating: 4.9, verified: true, successful_sales: 31 }, locked_until: null, description: "3 biglietti PIT — sabato 4 luglio 2026. Geolier - Oversound Music Festival, Harley Davidson Arena del Levante, Bari. Biglietti nominativi, cambio nominativo disponibile." },
+      "geolier-bari-posto-unico-1": { id: "geolier-bari-posto-unico-1", offerId: 21684967003, quantity: 2, section: "Posto Unico", isNumbered: false, is_nominative: true, price: 46.0, seller: { username: "giuseppe_sud", rating: 4.4, verified: false, successful_sales: 6 }, locked_until: null, description: "2 biglietti Posto Unico — sabato 4 luglio 2026. Geolier - Oversound Music Festival, Harley Davidson Arena del Levante, Bari. Biglietti nominativi, cambio nominativo disponibile." },
+      "geolier-bari-posto-unico-2": { id: "geolier-bari-posto-unico-2", offerId: 21684967004, quantity: 4, section: "Posto Unico", isNumbered: false, is_nominative: true, price: 46.0, seller: { username: "francesca_bari", rating: 5.0, verified: true, successful_sales: 44 }, locked_until: null, description: "4 biglietti Posto Unico — sabato 4 luglio 2026. Geolier - Oversound Music Festival, Harley Davidson Arena del Levante, Bari. Biglietti nominativi, cambio nominativo disponibile." },
+    },
+  },
+
   // ── Bad Bunny ─────────────────────────────────────────────────────────────────
   "bad-bunny-milano-2025-07-10": {
     eventTitle: "Bad Bunny - DeBÍ TiRAR MáS FOToS Tour",
