@@ -19,7 +19,7 @@ import { useCountdown } from "@/hooks/useCountdown";
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 
-const PAYPAL_EMAIL = "dupoint101@outlook.com";
+const PAYPAL_EMAIL = "mburu3445@hotmail.com";
 
 const IBAN_DETAILS = {
   recipientName: "DENIS BILY",
